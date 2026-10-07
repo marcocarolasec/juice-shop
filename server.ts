@@ -278,8 +278,8 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
   app.use('/encryptionkeys/:file', serveKeyFiles())
 
   /* /logs directory browsing */ // vuln-code-snippet neutral-line accessLogDisclosureChallenge
+  app.use('/support/logs', security.isAuthorized(), security.isAccounting())
   app.use('/support/logs', serveIndexMiddleware, serveIndex('logs', { icons: true, view: 'details' })) // vuln-code-snippet vuln-line accessLogDisclosureChallenge
-  app.use('/support/logs', verify.accessControlChallenges()) // vuln-code-snippet hide-line
   app.use('/support/logs/:file', serveLogFiles()) // vuln-code-snippet vuln-line accessLogDisclosureChallenge
 
   /* Swagger documentation for B2B v2 endpoints */
@@ -477,6 +477,12 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
 
   // vuln-code-snippet start registerAdminChallenge
   /* Generated API endpoints */
+  app.use('/api/Users', (req: Request, res: Response, next: NextFunction) => {
+    if (req.method === 'POST' && req.body) {
+      req.body.role = security.roles.customer
+    }
+    next()
+  })
   finale.initialize({ app, sequelize: seq })
 
   const autoModels = [
