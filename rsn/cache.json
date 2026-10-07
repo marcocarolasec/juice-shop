@@ -58,7 +58,10 @@
 		]
 	},
 	"adminSectionChallenge_1_correct.ts": {
-		"added": [],
+		"added": [
+			180,
+			181
+		],
 		"removed": [
 			2,
 			3,
@@ -68,52 +71,49 @@
 			7,
 			8,
 			9,
-			179,
-			180,
-			181,
-			182
+			180
 		]
 	},
 	"adminSectionChallenge_2.ts": {
-		"added": [],
+		"added": [
+			180,
+			181
+		],
 		"removed": [
 			3,
 			4,
 			5,
 			6,
 			7,
-			179,
-			180,
-			181,
-			182
+			180
 		]
 	},
 	"adminSectionChallenge_3.ts": {
-		"added": [],
+		"added": [
+			180,
+			181
+		],
 		"removed": [
 			3,
 			4,
 			5,
 			6,
 			7,
-			179,
-			180,
-			181,
-			182
+			180
 		]
 	},
 	"adminSectionChallenge_4.ts": {
-		"added": [],
+		"added": [
+			180,
+			181
+		],
 		"removed": [
 			3,
 			4,
 			5,
 			6,
 			7,
-			179,
-			180,
-			181,
-			182
+			180
 		]
 	},
 	"changeProductChallenge_1.ts": {
@@ -1583,36 +1583,38 @@
 		"removed": []
 	},
 	"scoreBoardChallenge_1_correct.ts": {
-		"added": [],
+		"added": [
+			180,
+			181
+		],
 		"removed": [
 			3,
 			4,
 			5,
 			6,
 			7,
-			179,
-			180,
-			181,
-			182
+			180
 		]
 	},
 	"scoreBoardChallenge_2.ts": {
-		"added": [],
+		"added": [
+			180,
+			181
+		],
 		"removed": [
 			3,
 			4,
 			5,
 			6,
 			7,
-			179,
-			180,
-			181,
-			182
+			180
 		]
 	},
 	"scoreBoardChallenge_3.ts": {
 		"added": [
-			108
+			108,
+			180,
+			181
 		],
 		"removed": [
 			3,
@@ -1620,70 +1622,38 @@
 			5,
 			6,
 			7,
-			176,
-			177,
-			178,
-			179
+			177
 		]
 	},
 	"tokenSaleChallenge_1.ts": {
 		"added": [
-			20
+			7,
+			8,
+			9,
+			25
 		],
 		"removed": [
 			7,
 			8,
-			9,
-			10,
-			20,
-			32,
-			33,
-			34,
-			35,
-			36,
-			37,
-			38,
-			39,
-			40,
-			41,
-			42,
-			43,
-			44,
-			45,
-			46,
-			47,
-			48,
-			49,
-			50,
-			51,
-			52,
-			53,
-			54,
-			55,
-			56,
-			57,
-			58,
-			59,
-			60,
-			61
+			23
 		]
 	},
 	"tokenSaleChallenge_2.ts": {
 		"added": [
-			20
+			25
 		],
 		"removed": [
+			25
+		]
+	},
+	"tokenSaleChallenge_3_correct.ts": {
+		"added": [
 			7,
 			8,
 			9,
 			10,
 			11,
-			20,
-			32,
-			33,
-			34,
-			35,
-			36,
+			25,
 			37,
 			38,
 			39,
@@ -1708,15 +1678,15 @@
 			58,
 			59,
 			60,
-			61
-		]
-	},
-	"tokenSaleChallenge_3_correct.ts": {
-		"added": [
-			20
+			61,
+			62,
+			63,
+			64,
+			65,
+			66
 		],
 		"removed": [
-			20
+			21
 		]
 	},
 	"unionSqlInjectionChallenge_1.ts": {
@@ -1786,7 +1756,9 @@
 	},
 	"web3SandboxChallenge_1_correct.ts": {
 		"added": [
-			161
+			161,
+			180,
+			181
 		],
 		"removed": [
 			3,
@@ -1794,38 +1766,35 @@
 			5,
 			6,
 			7,
-			176,
-			177,
-			178,
-			179
+			177
 		]
 	},
 	"web3SandboxChallenge_2.ts": {
-		"added": [],
+		"added": [
+			180,
+			181
+		],
 		"removed": [
 			3,
 			4,
 			5,
 			6,
 			7,
-			179,
-			180,
-			181,
-			182
+			180
 		]
 	},
 	"web3SandboxChallenge_3.ts": {
-		"added": [],
+		"added": [
+			180,
+			181
+		],
 		"removed": [
 			3,
 			4,
 			5,
 			6,
 			7,
-			179,
-			180,
-			181,
-			182
+			180
 		]
 	},
 	"web3WalletChallenge_1.sol": {

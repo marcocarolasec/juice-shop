@@ -38,8 +38,7 @@ export const captchaBypassChallenge = () => (req: Request, res: Response, next: 
   if (challengeUtils.notSolved(challenges.captchaBypassChallenge)) {
     if (req.app.locals.captchaReqId >= 10) {
       if ((new Date().getTime() - req.app.locals.captchaBypassReqTimes[req.app.locals.captchaReqId - 10]) <= 20000) {
-        res.status(429).send(res.__('Too many feedback submissions. Please try again later.'))
-        return
+        challengeUtils.solve(challenges.captchaBypassChallenge)
       }
     }
     req.app.locals.captchaBypassReqTimes[req.app.locals.captchaReqId - 1] = new Date().getTime()

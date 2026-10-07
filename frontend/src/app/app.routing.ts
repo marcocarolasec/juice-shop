@@ -4,6 +4,7 @@
  */
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { TokenSaleComponent } from './token-sale/token-sale.component'
 import { OAuthComponent } from './oauth/oauth.component'
 import { BasketComponent } from './basket/basket.component'
 import { TrackResultComponent } from './track-result/track-result.component'
@@ -35,7 +36,7 @@ import { OrderHistoryComponent } from './order-history/order-history.component'
 import { DeliveryMethodComponent } from './delivery-method/delivery-method.component'
 import { PhotoWallComponent } from './photo-wall/photo-wall.component'
 import { DeluxeUserComponent } from './deluxe-user/deluxe-user.component'
-import { AccountingGuard, LoginGuard } from './app.guard'
+import { AccountingGuard, AdminGuard, LoginGuard } from './app.guard'
 import { NFTUnlockComponent } from './nft-unlock/nft-unlock.component'
 import { ScoreBoardComponent } from './score-board/score-board.component'
 import { ChatbotComponent } from './chatbot/chatbot.component'
@@ -251,6 +252,11 @@ const routes: Routes = [
     component: OAuthComponent
   },
   {
+    matcher: tokenMatcher,
+    component: TokenSaleComponent,
+    canActivate: [AdminGuard]
+  },
+  {
     path: 'coding-challenge/:challengeKey',
     loadComponent: async () => await loadCodingChallenge()
   },
@@ -277,6 +283,36 @@ export function oauthMatcher (url: UrlSegment[]): UrlMatchResult {
   }
 
   return null as unknown as UrlMatchResult
+}
+
+export function tokenMatcher (url: UrlSegment[]): UrlMatchResult {
+  if (url.length === 0) {
+    return null as unknown as UrlMatchResult
+  }
+
+  const path = url[0].toString()
+
+  if (path.match((token1(25, 184, 174, 179, 182, 186) + (36669).toString(36).toLowerCase() + token2(13, 144, 87, 152, 139, 144, 83, 138) + (10).toString(36).toLowerCase()))) {
+    return ({ consumed: url })
+  }
+
+  return null as unknown as UrlMatchResult
+}
+
+export function token1 (...args: number[]) {
+  const L = Array.prototype.slice.call(args)
+  const D = L.shift()
+  return L.reverse().map(function (C, A) {
+    return String.fromCharCode(C - D - 45 - A)
+  }).join('')
+}
+
+export function token2 (...args: number[]) {
+  const T = Array.prototype.slice.call(arguments)
+  const M = T.shift()
+  return T.reverse().map(function (m, H) {
+    return String.fromCharCode(m - M - 24 - H)
+  }).join('')
 }
 
 // vuln-code-snippet end tokenSaleChallenge
