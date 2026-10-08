@@ -275,6 +275,7 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
   /* Swagger documentation for B2B v2 endpoints */
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
+  app.get('/assets/public/images/carousel/5.png', security.denyAll())
   app.use(express.static(path.resolve('frontend/dist/frontend')))
   app.use(cookieParser('kekse'))
   // vuln-code-snippet end directoryListingChallenge accessLogDisclosureChallenge
@@ -359,6 +360,7 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
   // app.put('/api/Products/:id', security.isAuthorized()) // vuln-code-snippet vuln-line changeProductChallenge
   app.delete('/api/Products/:id', security.denyAll())
   /* Challenges: GET list of challenges allowed. Everything else forbidden entirely */
+  app.get('/api/Challenges', security.isAdmin())
   app.post('/api/Challenges', security.denyAll())
   app.use('/api/Challenges/:id', security.denyAll())
   /* Hints: GET and PUT hints allowed. Everything else forbidden */
@@ -368,7 +370,7 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
     .delete(security.denyAll())
   /* Complaints: POST and GET allowed when logged in only */
   app.get('/api/Complaints', security.isAdmin())
-  app.post('/api/Complaints', security.isAuthorized(), verify.rejectUnsafeSupplyChainReports())
+  app.post('/api/Complaints', security.denyAll())
   app.use('/api/Complaints/:id', security.denyAll())
   /* Recycles: POST and GET allowed when logged in only */
   app.get('/api/Recycles', recycles.blockRecycleItems())
@@ -388,6 +390,7 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
   app.use('/rest/basket/:id', security.isAuthorized())
   app.use('/rest/basket/:id/order', security.isAuthorized())
   /* Challenge evaluation before finale takes over */ // vuln-code-snippet hide-start
+  app.post('/api/Feedbacks', security.denyAll())
   app.post('/api/Feedbacks', verify.forgedFeedbackChallenge())
   app.post('/api/Feedbacks', verify.rejectUnsafeSupplyChainReports())
   app.post('/api/Feedbacks', rateLimit({ windowMs: 20 * 1000, max: 9, validate: false }))
