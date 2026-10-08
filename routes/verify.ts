@@ -47,7 +47,8 @@ export const captchaBypassChallenge = () => (req: Request, res: Response, next: 
   if (challengeUtils.notSolved(challenges.captchaBypassChallenge)) {
     if (req.app.locals.captchaReqId >= 10) {
       if ((new Date().getTime() - req.app.locals.captchaBypassReqTimes[req.app.locals.captchaReqId - 10]) <= 20000) {
-        challengeUtils.solve(challenges.captchaBypassChallenge)
+        res.status(429).send(res.__('Too many feedback submissions. Please try again later.'))
+        return
       }
     }
     req.app.locals.captchaBypassReqTimes[req.app.locals.captchaReqId - 1] = new Date().getTime()
@@ -70,13 +71,8 @@ export const passwordRepeatChallenge = () => (req: Request, res: Response, next:
 
 export const accessControlChallenges = () => (req: Request, res: Response, next: NextFunction) => {
   const { url } = req
-  const user = security.authenticatedUsers.from(req)
-  const isAdmin = user?.data?.role === security.roles.admin
   const uiBypassed = req.header('sec-fetch-dest') === 'document' || !req.header('referer')
-  challengeUtils.solveIf(challenges.scoreBoardChallenge, () => { return utils.endsWith(url, '/1px.png') }, false, uiBypassed)
   challengeUtils.solveIf(challenges.web3SandboxChallenge, () => { return utils.endsWith(url, '/11px.png') }, false, uiBypassed)
-  challengeUtils.solveIf(challenges.adminSectionChallenge, () => { return isAdmin && utils.endsWith(url, '/19px.png') }, false, uiBypassed)
-  challengeUtils.solveIf(challenges.tokenSaleChallenge, () => { return isAdmin && utils.endsWith(url, '/56px.png') }, false, uiBypassed)
   challengeUtils.solveIf(challenges.privacyPolicyChallenge, () => { return utils.endsWith(url, '/81px.png') }, false, uiBypassed)
   challengeUtils.solveIf(challenges.extraLanguageChallenge, () => { return utils.endsWith(url, '/tlh_AA.json') })
   challengeUtils.solveIf(challenges.retrieveBlueprintChallenge, () => { return utils.endsWith(url, retrieveBlueprintChallengeFile ?? undefined) })
@@ -192,12 +188,6 @@ export const databaseRelatedChallenges = () => (req: Request, res: Response, nex
   if (challengeUtils.notSolved(challenges.typosquattingAngularChallenge)) {
     typosquattingAngularChallenge()
   }
-  if (challengeUtils.notSolved(challenges.hiddenImageChallenge)) {
-    hiddenImageChallenge()
-  }
-  if (challengeUtils.notSolved(challenges.supplyChainAttackChallenge)) {
-    supplyChainAttackChallenge()
-  }
   if (challengeUtils.notSolved(challenges.dlpPastebinDataLeakChallenge)) {
     dlpPastebinDataLeakChallenge()
   }
@@ -292,27 +282,6 @@ function typosquattingAngularChallenge () {
     challenges.typosquattingAngularChallenge,
     { [Op.like]: '%ngy-cookie%' }
   )
-}
-
-function hiddenImageChallenge () {
-  void checkPatternInFeedbackAndComplaints(
-    challenges.hiddenImageChallenge,
-    { [Op.like]: '%pickle rick%' }
-  )
-}
-
-function supplyChainAttackChallenge () {
-  void checkPatternInFeedbackAndComplaints(
-    challenges.supplyChainAttackChallenge,
-    { [Op.or]: eslintScopeVulnIds() }
-  )
-}
-
-function eslintScopeVulnIds () {
-  return [
-    { [Op.like]: '%eslint-scope/issues/39%' },
-    { [Op.like]: '%npm:eslint-scope:20180712%' }
-  ]
 }
 
 function dlpPastebinDataLeakChallenge () {

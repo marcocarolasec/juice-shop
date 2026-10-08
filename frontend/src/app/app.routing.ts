@@ -178,7 +178,8 @@ const routes: Routes = [
   },
   { // vuln-code-snippet neutral-line scoreBoardChallenge
     path: 'score-board', // vuln-code-snippet vuln-line scoreBoardChallenge
-    component: ScoreBoardComponent // vuln-code-snippet neutral-line scoreBoardChallenge
+    component: ScoreBoardComponent, // vuln-code-snippet neutral-line scoreBoardChallenge
+    canActivate: [AdminGuard]
   }, // vuln-code-snippet neutral-line scoreBoardChallenge
   {
     path: 'track-result',
