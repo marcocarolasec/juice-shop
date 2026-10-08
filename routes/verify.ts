@@ -35,8 +35,10 @@ export const forgedFeedbackChallenge = () => (req: Request, res: Response, next:
 }
 
 export const rejectUnsafeSupplyChainReports = () => (req: Request, res: Response, next: NextFunction) => {
-  const comment = typeof req.body?.comment === 'string' ? req.body.comment.toLowerCase() : ''
-  if (comment.includes('eslint-scope/issues/39') || comment.includes('npm:eslint-scope:20180712')) {
+  const report = typeof req.body?.comment === 'string'
+    ? req.body.comment.toLowerCase()
+    : typeof req.body?.message === 'string' ? req.body.message.toLowerCase() : ''
+  if (report.includes('eslint-scope/issues/39') || report.includes('npm:eslint-scope:20180712')) {
     res.status(400).json({ status: 'error', message: 'Potentially unsafe supply-chain content was rejected.' })
     return
   }

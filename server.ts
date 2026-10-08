@@ -349,9 +349,9 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
   /* Feedbacks: GET allowed for feedback carousel, POST allowed in order to provide feedback without being logged in */
   app.use('/api/Feedbacks/:id', security.isAuthorized())
   /* Users: Only POST is allowed in order to register a new user */
-  app.get('/api/Users', security.isAuthorized())
+  app.get('/api/Users', security.isAdmin())
   app.route('/api/Users/:id')
-    .get(security.isAuthorized())
+    .get(security.isAdmin())
     .put(security.denyAll())
     .delete(security.denyAll())
   /* Products: Only GET is allowed in order to view products */ // vuln-code-snippet neutral-line changeProductChallenge
@@ -367,8 +367,8 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
     .get(security.denyAll())
     .delete(security.denyAll())
   /* Complaints: POST and GET allowed when logged in only */
-  app.get('/api/Complaints', security.isAuthorized())
-  app.post('/api/Complaints', security.isAuthorized())
+  app.get('/api/Complaints', security.isAdmin())
+  app.post('/api/Complaints', security.isAuthorized(), verify.rejectUnsafeSupplyChainReports())
   app.use('/api/Complaints/:id', security.denyAll())
   /* Recycles: POST and GET allowed when logged in only */
   app.get('/api/Recycles', recycles.blockRecycleItems())
@@ -390,6 +390,7 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
   /* Challenge evaluation before finale takes over */ // vuln-code-snippet hide-start
   app.post('/api/Feedbacks', verify.forgedFeedbackChallenge())
   app.post('/api/Feedbacks', verify.rejectUnsafeSupplyChainReports())
+  app.post('/api/Feedbacks', rateLimit({ windowMs: 20 * 1000, max: 9, validate: false }))
   /* Captcha verification before finale takes over */
   app.post('/api/Feedbacks', utils.asyncHandler(verifyCaptcha()))
   /* Captcha Bypass challenge verification */
