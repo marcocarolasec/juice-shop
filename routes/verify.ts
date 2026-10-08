@@ -34,6 +34,15 @@ export const forgedFeedbackChallenge = () => (req: Request, res: Response, next:
   next()
 }
 
+export const rejectUnsafeSupplyChainReports = () => (req: Request, res: Response, next: NextFunction) => {
+  const comment = typeof req.body?.comment === 'string' ? req.body.comment.toLowerCase() : ''
+  if (comment.includes('eslint-scope/issues/39') || comment.includes('npm:eslint-scope:20180712')) {
+    res.status(400).json({ status: 'error', message: 'Potentially unsafe supply-chain content was rejected.' })
+    return
+  }
+  next()
+}
+
 export const captchaBypassChallenge = () => (req: Request, res: Response, next: NextFunction) => {
   if (challengeUtils.notSolved(challenges.captchaBypassChallenge)) {
     if (req.app.locals.captchaReqId >= 10) {
