@@ -390,7 +390,6 @@ function configureApp (app: ReturnType<typeof express>, seq: typeof sequelize) {
   app.use('/rest/basket/:id', security.isAuthorized())
   app.use('/rest/basket/:id/order', security.isAuthorized())
   /* Challenge evaluation before finale takes over */ // vuln-code-snippet hide-start
-  app.post('/api/Feedbacks', security.denyAll())
   app.post('/api/Feedbacks', verify.forgedFeedbackChallenge())
   app.post('/api/Feedbacks', verify.rejectUnsafeSupplyChainReports())
   app.post('/api/Feedbacks', rateLimit({ windowMs: 20 * 1000, max: 9, validate: false }))
