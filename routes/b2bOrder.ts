@@ -8,11 +8,6 @@ import * as security from '../lib/insecurity'
 
 export function b2bOrder () {
   return ({ body }: Request, res: Response) => {
-    const orderLinesData = body.orderLinesData
-    if (orderLinesData !== undefined && typeof orderLinesData !== 'object') {
-      res.status(400).json({ error: 'Invalid order line data' })
-      return
-    }
     res.json({ cid: body.cid, orderNo: uniqueOrderNumber(), paymentDue: dateTwoWeeksFromNow() })
   }
 
