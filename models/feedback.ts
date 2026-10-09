@@ -12,6 +12,8 @@ import {
   type CreationOptional,
   type Sequelize
 } from 'sequelize'
+import { challenges } from '../data/datacache'
+import * as challengeUtils from '../lib/challengeUtils'
 import * as security from '../lib/insecurity'
 
 class Feedback extends Model<
