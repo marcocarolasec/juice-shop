@@ -38,7 +38,8 @@ export const rejectUnsafeSupplyChainReports = () => (req: Request, res: Response
   const report = typeof req.body?.comment === 'string'
     ? req.body.comment.toLowerCase()
     : typeof req.body?.message === 'string' ? req.body.message.toLowerCase() : ''
-  if (report.includes('eslint-scope/issues/39') || report.includes('npm:eslint-scope:20180712')) {
+  const normalizedReport = report.replace(/\s+/g, '')
+  if (normalizedReport.includes('eslint-scope/issues/39') || normalizedReport.includes('npm:eslint-scope:20180712')) {
     res.status(400).json({ status: 'error', message: 'Potentially unsafe supply-chain content was rejected.' })
     return
   }
